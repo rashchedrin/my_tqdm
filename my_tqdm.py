@@ -44,13 +44,15 @@ class Stopwatch:
 
     def status(self):
         if self.total_ops:
-            return "%d / %d. %s. Expected end: %s. Left: %s. Spent: %s." % (
-                self.done,
-                self.total_ops,
-                time_per_iter_human_readable(self.avg()),
-                self.expected_end(),
-                time_human_readable(self.eta()),
-                time_human_readable(self.total_time())
+            return "{done} / {total}. " \
+                   "{speed}. Expected end: {end}. " \
+                   "Left: {left}. Spent: {spent}.".format(
+                done=self.done,
+                total=self.total_ops,
+                speed=time_per_iter_human_readable(self.avg()),
+                end=self.expected_end().strftime("%Y-%m-%d %H:%M:%S"),
+                left=time_human_readable(self.eta()),
+                spent=time_human_readable(self.total_time())
             )
         else:
             return "%d / ?. %s. Spent: %s." % (

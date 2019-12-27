@@ -81,4 +81,19 @@ def my_tqdm_(generator, min_print_interval_sec=1.0, total=None):
             last_print = time.time()
         yield e
     print("\r%s" % stopwatch.status())
-   
+
+
+class my_tqdm(object):
+    def __init__(self, generator, min_print_interval_sec=1.0, total=None):
+        self.generator = my_tqdm_(generator, min_print_interval_sec, total)
+        self.total_ops = total or (
+            len(generator) if hasattr(generator, '__len__') else None)
+
+    def __len__(self):
+        return self.total_ops
+
+    def __iter__(self):
+        return self.generator
+
+    def __next__(self):
+        return next(self.generator)

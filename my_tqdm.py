@@ -1,3 +1,4 @@
+from __future__ import print_function
 import time
 from datetime import datetime, timedelta
 
@@ -97,3 +98,7 @@ class my_tqdm(object):
 
     def __next__(self):
         return next(self.generator)
+
+    # python 2 compatibility
+    def next(self):
+        return self.__next__()
